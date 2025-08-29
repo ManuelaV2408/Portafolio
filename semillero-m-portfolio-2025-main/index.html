@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+    <title>Hoja de Vida - Manuela Villada</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.15);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 4px solid #2196f3;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+            overflow: hidden;
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            color: #1565c0;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        h2 {
+            color: #1976d2;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        h3 {
+            color: #2196f3;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .subtitle {
+            color: #546e7a;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(33, 150, 243, 0.1);
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #2196f3;
+            border: 2px solid #2196f3;
+        }
+
+        .btn-outline:hover {
+            background: #2196f3;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.1);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #f8fdff;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #2196f3;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(33, 150, 243, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2);
+            background: #e3f2fd;
+        }
+
+        .skill-bar {
+            background: #e3f2fd;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            background: linear-gradient(90deg, #2196f3 0%, #64b5f6 100%);
+            height: 8px;
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+        }
+
+        .project-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid #bbdefb;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.15);
+            border-color: #2196f3;
+        }
+
+        .hobby-item {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .hobby-item:hover {
+            background: #bbdefb;
+            transform: translateX(5px);
+        }
+
+        .hobby-icon {
+            width: 40px;
+            height: 40px;
+            background: #2196f3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #546e7a;
+            margin-top: 50px;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .buttons-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 30px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const HojaDeVida = () => {
+            const [activeSection, setActiveSection] = useState('informacion');
+
+            const sections = {
+                informacion: {
+                    title: 'Información Personal',
+                    content: (
+                        <div className="section-grid">
+                            <div className="card">
+                                <h3>👤 Sobre Mí</h3>
+                                <p>Soy una desarrolladora apasionada por la tecnología y la innovación. Me encanta crear soluciones que impacten positivamente en la vida de las personas y proteger sus interacciones en el internet, manteniendo un lugar seguro para su informacion personal.</p>
+                            </div>
+                            <div className="card">
+                                <h3>🎓 Educación</h3>
+                                <p><strong>Tecnico Auxiliar en Desarrollo de Software</strong><br/>
+                                Pascual Bravo<br/>
+                                2024 - 2025</p>
+                                <p><strong>Certificaciones</strong><br/></p>
+                                <a href="../public/sd.jpg">Impacto Maker <br/></a>
+                                <a href="../public/sdf.jpg">Coursera <br/></a>
+                                <a href="../public/ss.jpg">Alura <br/></a>
+
+
+                                
+
+                            </div>
+                            <div className="card">
+                                <h3>💼 Experiencia</h3>
+                                <p><strong>Analista en ciberseguridad</strong><br/>
+                                IBM.<br/>
+                                2025 - Presente</p>
+                            </div>
+                        </div>
+                    )
+                },
+                habilidades: {
+                    title: 'Habilidades Técnicas',
+                    content: (
+
+    <div>
+       
+        <p style={{marginBottom: '20px'}}>
+            Además de mis habilidades técnicas, también cuento con habilidades blandas que potencian mi desempeño profesional.
+        </p>
+        
+        <div className="skill-item">
+            <h3>Python</h3>
+            <div className="skill-bar">
+                <div className="skill-progress" style={{width: '90%'}}></div>
+            </div>
+        </div>
+        <div className="skill-item">
+            <h3>Java</h3>
+            <div className="skill-bar">
+                <div className="skill-progress" style={{width: '85%'}}></div>
+            </div>
+        </div>
+        <div className="skill-item">
+            <h3>CSS/HTML</h3>
+            <div className="skill-bar">
+                <div className="skill-progress" style={{width: '88%'}}></div>
+            </div>
+        </div>
+        <div className="skill-item">
+            <h3>JavaScript</h3>
+            <div className="skill-bar">
+                <div className="skill-progress" style={{width: '75%'}}></div>
+            </div>
+        </div>
+        
+        <div style={{marginTop: '30px'}}>
+            <h3>Habilidades Blandas</h3>
+            <ul>
+                <li>Comunicación asertiva</li>
+                <li>Trabajo en equipo</li>
+                <li>Resolución de problemas</li>
+                <li>Adaptabilidad</li>
+                <li>Pensamiento crítico</li>
+            </ul>
+        </div>
+    </div>
+),
+                    
+                },
+                proyectos: {
+                    title: 'Proyectos Destacados',
+                    content: (
+                        <div>
+                            <div className="project-card">
+                                <h3>🎯 E-commerce Platform</h3>
+                                <p>Plataforma completa de comercio electrónico con React, Node.js y MongoDB. Incluye carrito de compras, pasarela de pago y panel administrativo.</p>
+                                <p><strong>Tecnologías:</strong> React, Node.js, MongoDB, Stripe</p>
+                            </div>
+                            <div className="project-card">
+                                <h3>App de Gestión de Tareas</h3>
+                                <p>Aplicación móvil para gestión de tareas con sincronización en la nube y recordatorios .</p>
+                                <p><strong>Tecnologías:</strong> React Native, php, Redux</p>
+                            </div>
+                            <div className="project-card">
+                                <h3>Gestion de notas </h3>
+                                <p>Espacio virtual interactivo para el control de notas en un plantel educativo generando promedio final del estidiante.</p>
+                                <p><strong>Tecnologías:</strong> HTML, CSS, JavaScript, php</p>
+                            </div>
+                        </div>
+                    )
+                },
+                hobbies: {
+                    title: 'Hobbies e Intereses',
+                    content: (
+                        <div>
+                            <div className="hobby-item">
+                                <div className="hobby-icon">📚</div>
+                                <div>
+                                    <h4>Lectura </h4>
+                                    <p>Me gusta descrubrir nuevos mundos atraves de las paginas</p>
+                                </div>
+                            </div>
+                            <div className="hobby-item">
+                                <div className="hobby-icon">🎮</div>
+                                <div>
+                                    <h4>Videojuegos</h4>
+                                    <p>Disfruto de juegos de estrategia que desafían la mente</p>
+                                </div>
+                            </div>
+                            <div className="hobby-item">
+                                <div className="hobby-icon">🚴</div>
+                                <div>
+                                    <h4>Ciclismo</h4>
+                                    <p>Dar paseos en bicicleta con mi hermana para mantenerme activa y disfrutar de un nuevo ambiente</p>
+                                </div>
+                            </div>
+                            <div className="hobby-item">
+                                <div className="hobby-icon">✈️</div>
+                                <div>
+                                    <h4>Viajes</h4>
+                                    <p>Explorar nuevas culturas y paisajes alrededor del pais y proximamente del mundo</p>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+            };
+
+            return (
+                <div className="container">
+                    <div className="header">
+                        <div className="profile-picture">
+                            <img src= "../public/Manuela Villada Salas.jpg"  alt="Foto Manuela" />
+                        </div>
+                        <h1>Manuela Villada Salas</h1>
+                        <div className="subtitle">Analista en ciberseguridad</div>
+                        <div className="contact-info">
+                            <p>📧 villada.sadep@gmail.com | 📱 304 4897245</p>
+                            <p>|📍 Medellin, Colombia | </p>
+                        </div>
+                    </div>
+
+                    <div className="buttons-container">
+                        <button 
+                            className={`btn ${activeSection === 'informacion' ? 'btn-primary' : 'btn-outline'}`}
+                            onClick={() => setActiveSection('informacion')}
+                        >
+                            Información
+                        </button>
+                        <button 
+                            className={`btn ${activeSection === 'habilidades' ? 'btn-primary' : 'btn-outline'}`}
+                            onClick={() => setActiveSection('habilidades')}
+                        >
+                            Habilidades
+                        </button>
+                        <button 
+                            className={`btn ${activeSection === 'proyectos' ? 'btn-primary' : 'btn-outline'}`}
+                            onClick={() => setActiveSection('proyectos')}
+                        >
+                            Proyectos
+                        </button>
+                        <button 
+                            className={`btn ${activeSection === 'hobbies' ? 'btn-primary' : 'btn-outline'}`}
+                            onClick={() => setActiveSection('hobbies')}
+                        >
+                            Hobbies
+                        </button>
+                    </div>
+
+                    <div className="content-section">
+                        <h2>{sections[activeSection].title}</h2>
+                        {sections[activeSection].content}
+                    </div>
+
+                    <div className="footer">
+                        <p>© 2025 Manuela Villada. Todos los derechos reservados.</p>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<HojaDeVida />);
+    </script>
+</body>
+</html>
+
+  
